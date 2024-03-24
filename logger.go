@@ -54,28 +54,33 @@ func New() *Logger {
 	}
 }
 
-func (cl *Logger) Debug(msg string) {
-	if cl.level <= DebugLevel || cl.level == AllLevel {
-		cl.Println("[DEBUG]", msg)
+func (l *Logger) Debug(msg string, args ...interface{}) {
+	if l.level <= DebugLevel || l.level == AllLevel {
+		l.printLog("[DEBUG]", msg, args...)
 	}
 }
 
-func (cl *Logger) Info(msg string) {
-	if cl.level <= InfoLevel || cl.level == AllLevel {
-		cl.Println("[INFO]", msg)
+func (l *Logger) Info(msg string, args ...interface{}) {
+	if l.level <= InfoLevel || l.level == AllLevel {
+		l.printLog("[INFO]", msg, args...)
 	}
 }
 
-func (cl *Logger) Warning(msg string) {
-	if cl.level <= WarningLevel || cl.level == AllLevel {
-		cl.Println("[WARNING]", msg)
+func (l *Logger) Warning(msg string, args ...interface{}) {
+	if l.level <= WarningLevel || l.level == AllLevel {
+		l.printLog("[WARNING]", msg, args...)
 	}
 }
 
-func (cl *Logger) Error(msg string) {
-	if cl.level <= ErrorLevel || cl.level == AllLevel {
-		cl.Println("[ERROR]", msg)
+func (l *Logger) Error(msg string, args ...interface{}) {
+	if l.level <= ErrorLevel || l.level == AllLevel {
+		l.printLog("[ERROR]", msg, args...)
 	}
+}
+
+func (l *Logger) printLog(level, formattedMsg string, args ...interface{}) {
+	msg := fmt.Sprintf(formattedMsg, args...)
+	l.Printf("%s %s", level, msg)
 }
 
 func LogLevelFromString(levelStr string) LogLevel {
