@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"runtime"
 	"strings"
 
 	"github.com/joho/godotenv"
@@ -79,8 +80,20 @@ func (l *Logger) Error(msg string, args ...interface{}) {
 }
 
 func (l *Logger) printLog(level, formattedMsg string, args ...interface{}) {
+	_, file, line, _ := runtime.Caller(2)
+	file = trimGOPATH(file)
+
 	msg := fmt.Sprintf(formattedMsg, args...)
-	l.Printf("%s %s", level, msg)
+
+	l.Printf("%s %s:%d %s", level, file, line, msg)
+}
+
+func trimGOPATH(path string) string {
+	gopath := os.Getenv("GOPATH")
+	if gopath == "" {
+		return path
+	}
+	return strings.TrimPrefix(path, gopath+"/src/")
 }
 
 func LogLevelFromString(levelStr string) LogLevel {
