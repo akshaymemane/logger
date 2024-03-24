@@ -1,0 +1,19 @@
+# Compiled binary files
+*.exe
+*.o
+
+# Temporary files
+*.tmp
+*.swp
+*.swo
+
+# IDE/Editor files
+.idea/
+.vscode/
+*.sublime-*
+
+# Dependency directories
+vendor/
+
+# Log files
+*.log
