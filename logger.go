@@ -111,6 +111,10 @@ func transformFilePath(file string) string {
 		return file // Return original file path
 	}
 
+	if strings.HasPrefix(relPath, "..") {
+		return file
+	}
+
 	return relPath
 }
 
